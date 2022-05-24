@@ -1,0 +1,52 @@
+version: "3"
+services:
+    react-app:
+        # image: react-app2
+        # stdin_open: true
+        build:
+            context: ./frontend
+            dockerfile: Dockerfile
+        volumes:
+            - "./frontend:/usr/app"
+            #  - "/usr/app/node_modules"
+        ports:
+            - "3000:3000"
+        networks:
+            - mern-app
+    api-server:
+        # image: api-server2
+        build:
+            context: ./backend
+            dockerfile: Dockerfile
+        ports:
+            - "8000:8000"
+        networks:
+            - mern-app
+        volumes:
+            - .:/usr/app
+            - ./backend:/usr/app
+            # - "/usr/app/node_modules"
+        links:
+            - mongodb
+        depends_on:
+            - mongodb
+    mongodb:
+        image: mongo:latest
+        restart: always
+        environment:
+            MONGO_INITDB_ROOT_USERNAME: root
+            MONGO_INITDB_ROOT_PASSWORD: example
+        ports:
+            - "27017:27017"
+        expose:
+            - "27017"
+        networks:
+            - mern-app
+        volumes:
+            - mongo-data:/data/db
+networks:
+    mern-app:
+        driver: bridge
+volumes:
+    mongo-data:
+        driver: local
