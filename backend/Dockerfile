@@ -8,15 +8,15 @@ FROM node:lts-alpine
 WORKDIR /usr/app
 # WORKDIR '/app/backend'
 
-# COPY package*.json ./
+COPY package*.json ./usr/app
 # COPY ./package-lock.json ./
-COPY . .
+
+COPY . /usr/app
 
 RUN npm install
 
-
-
 EXPOSE 8000
 
+# CMD [ "npm", "start" ]
 
-CMD [ "npm", "start" ]
+CMD [ "node", "server.js" ]

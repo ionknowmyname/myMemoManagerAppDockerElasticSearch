@@ -1,19 +1,19 @@
 version: "3"
 services:
-    react-app:
+    mymemoapp-frontend:
         # image: react-app2
         # stdin_open: true
         build:
             context: ./frontend
             dockerfile: Dockerfile
         volumes:
-            - "./frontend:/usr/app"
+            - "./frontend:/usr/app/front"
             #  - "/usr/app/node_modules"
         ports:
             - "3000:3000"
         networks:
             - mern-app
-    api-server:
+    mymemoapp-backend:
         # image: api-server2
         build:
             context: ./backend
@@ -24,7 +24,7 @@ services:
             - mern-app
         volumes:
             - .:/usr/app
-            - ./backend:/usr/app
+            # - ./backend:/usr/app
             # - "/usr/app/node_modules"
         links:
             - mongodb
@@ -34,8 +34,9 @@ services:
         image: mongo:latest
         restart: always
         environment:
-            MONGO_INITDB_ROOT_USERNAME: root
-            MONGO_INITDB_ROOT_PASSWORD: example
+            MONGO_INITDB_DATABASE: mymemo
+        #     MONGO_INITDB_ROOT_USERNAME: root
+        #     MONGO_INITDB_ROOT_PASSWORD: example
         ports:
             - "27017:27017"
         expose:

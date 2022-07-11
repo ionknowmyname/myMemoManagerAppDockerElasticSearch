@@ -18,7 +18,7 @@ dotenv.config();
 // coz mongodb was used as a link in docker-compose, so everything is set up for us
 
 mongoose
-    .connect("mongodb://localhost:27017/mymemo", {  // change localhost to mongodb:27017
+    .connect("mongodb://mongodb:27017/mymemo", {  // change localhost to mongodb:27017
         //process.env.DATABASE
         useNewUrlParser: true,
         useCreateIndex: true,
